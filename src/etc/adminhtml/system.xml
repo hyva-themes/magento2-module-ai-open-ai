@@ -17,21 +17,6 @@
                     <comment><![CDATA[Get your API key from <a href="https://platform.openai.com/account/api-keys" target="_blank">OpenAI Platform</a>]]></comment>
                     <backend_model>Magento\Config\Model\Config\Backend\Encrypted</backend_model>
                 </field>
-                <field id="model" translate="label comment" type="select" sortOrder="20" showInDefault="1" showInWebsite="1" showInStore="1">
-                    <label>Default Model</label>
-                    <source_model>Hyva\AiOpenai\Model\Config\Source\Model</source_model>
-                    <comment>Default model to use for AI requests</comment>
-                </field>
-                <field id="temperature" translate="label comment" type="text" sortOrder="30" showInDefault="1" showInWebsite="1" showInStore="1">
-                    <label>Temperature</label>
-                    <comment>Controls randomness. Lower values = more focused, higher values = more creative (0.0 - 2.0)</comment>
-                    <validate>validate-number validate-number-range number-range-0-2</validate>
-                </field>
-                <field id="max_tokens" translate="label comment" type="text" sortOrder="40" showInDefault="1" showInWebsite="1" showInStore="1">
-                    <label>Max Tokens</label>
-                    <comment>Maximum number of tokens in the response</comment>
-                    <validate>validate-digits validate-digits-range digits-range-1-8000</validate>
-                </field>
             </group>
         </section>
     </system>
