@@ -7,7 +7,7 @@
  */
 declare(strict_types=1);
 
-namespace Hyva\AiOpenai\Model\Config\Source;
+namespace Hyva\AiOpenAi\Model\Config\Source;
 
 use Magento\Framework\Data\OptionSourceInterface;
 

@@ -7,10 +7,10 @@
  */
 declare(strict_types=1);
 
-namespace Hyva\AiOpenai\Model\Provider;
+namespace Hyva\AiOpenAi\Model\Provider;
 
 use Hyva\Ai\Api\ProviderInterface;
-use Hyva\AiOpenai\Model\Client;
+use Hyva\AiOpenAi\Model\Client;
 use Magento\Framework\Exception\LocalizedException;
 
 class OpenaiProvider implements ProviderInterface

@@ -1,6 +1,6 @@
 {
-  "name": "hyva-themes/module-ai-openai",
-  "description": "Hyva_AiOpenai module",
+  "name": "hyva-themes/module-ai-open-ai",
+  "description": "Hyva_AiOpenAi module",
   "type": "magento2-module",
   "require": {
     "magento/framework": "*"
@@ -15,7 +15,7 @@
       "src/registration.php"
     ],
     "psr-4": {
-      "Hyva\\AiOpenai\\": "src/"
+      "Hyva\\AiOpenAi\\": "src/"
     }
   }
 }

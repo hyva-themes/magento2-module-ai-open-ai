@@ -7,7 +7,7 @@
  */
 declare(strict_types=1);
 
-namespace Hyva\AiOpenai\Model;
+namespace Hyva\AiOpenAi\Model;
 
 use Magento\Framework\App\Config\ScopeConfigInterface;
 use Magento\Framework\Exception\LocalizedException;

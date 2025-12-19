@@ -12,7 +12,7 @@
     <type name="Hyva\Ai\Controller\Adminhtml\Ai\Process">
         <arguments>
             <argument name="providers" xsi:type="array">
-                <item name="openai" xsi:type="object">Hyva\AiOpenai\Model\Provider\OpenaiProvider</item>
+                <item name="openai" xsi:type="object">Hyva\AiOpenAi\Model\Provider\OpenAiProvider</item>
             </argument>
         </arguments>
     </type>
