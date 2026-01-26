@@ -9,14 +9,16 @@ declare(strict_types=1);
 
 namespace Hyva\AiOpenAi\Model\Provider;
 
+use Hyva\Ai\Api\ProviderConfigInterface;
 use Hyva\Ai\Api\ProviderInterface;
 use Hyva\AiOpenAi\Model\Client;
 use Magento\Framework\Exception\LocalizedException;
 
-class OpenaiProvider implements ProviderInterface
+class OpenAiProvider implements ProviderInterface
 {
     public function __construct(
-        private readonly Client $client
+        private readonly Client $client,
+        private readonly ProviderConfigInterface $providerConfig
     ) {
     }
 
@@ -27,9 +29,9 @@ class OpenaiProvider implements ProviderInterface
             throw new LocalizedException(__('Messages are required for OpenAI processing.'));
         }
 
-        $model = $options['model'] ?? 'gpt-3.5-turbo';
-        $temperature = $options['temperature'] ?? 0.7;
-        $maxTokens = $options['max_tokens'] ?? 4000;
+        $model = $options['model'] ?? $this->providerConfig->getDefaultModel();
+        $temperature = $options['temperature'] ?? $this->providerConfig->getDefaultTemperature();
+        $maxTokens = $options['max_tokens'] ?? $this->providerConfig->getDefaultMaxTokens();
 
         $responses = [];
 
@@ -61,6 +63,6 @@ class OpenaiProvider implements ProviderInterface
 
     public function getName(): string
     {
-        return 'openai';
+        return $this->providerConfig->getProviderName();
     }
 }

@@ -14,16 +14,18 @@ use Magento\Framework\Data\OptionSourceInterface;
 class Model implements OptionSourceInterface
 {
     /**
+     * @param array $options
+     */
+    public function __construct(
+        private readonly array $options
+    ) {
+    }
+
+    /**
      * Return array of options as value-label pairs
      */
     public function toOptionArray(): array
     {
-        return [
-            ['value' => 'gpt-4o-mini', 'label' => 'GPT-4o Mini'],
-            ['value' => 'gpt-4o', 'label' => 'GPT-4o'],
-            ['value' => 'gpt-4-turbo', 'label' => 'GPT-4 Turbo'],
-            ['value' => 'gpt-4', 'label' => 'GPT-4'],
-            ['value' => 'gpt-3.5-turbo', 'label' => 'GPT-3.5 Turbo'],
-        ];
+        return $this->options;
     }
 }

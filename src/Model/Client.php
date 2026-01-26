@@ -9,17 +9,16 @@ declare(strict_types=1);
 
 namespace Hyva\AiOpenAi\Model;
 
+use Hyva\Ai\Api\ProviderConfigInterface;
 use Magento\Framework\App\Config\ScopeConfigInterface;
 use Magento\Framework\Exception\LocalizedException;
 use Magento\Framework\HTTP\Client\Curl;
 use Magento\Framework\Serialize\Serializer\Json;
 use Magento\Framework\Encryption\EncryptorInterface;
-use Psr\Log\LoggerInterface;
 
 class Client
 {
-    private const OPENAI_API_URL = 'https://api.openai.com/v1/chat/completions';
-    private const DEFAULT_MODEL = 'gpt-3.5-turbo';
+    private const DEFAULT_API_URL = 'https://api.openai.com/v1/chat/completions';
     private const CONFIG_PATH_API_KEY = 'hyva_ai/openai/api_key';
 
     public function __construct(
@@ -27,7 +26,8 @@ class Client
         private Curl $curl,
         private Json $json,
         private EncryptorInterface $encryptor,
-        private LoggerInterface $logger
+        private ProviderConfigInterface $providerConfig,
+        private string $apiUrl = self::DEFAULT_API_URL
     ) {
     }
 
@@ -36,10 +36,13 @@ class Client
      */
     public function chatCompletion(
         array $messages,
-        string $model = self::DEFAULT_MODEL,
-        float $temperature = 0.7,
-        int $maxTokens = 4000
+        ?string $model = null,
+        ?float $temperature = null,
+        ?int $maxTokens = null
     ): array {
+        $model = $model ?? $this->providerConfig->getDefaultModel();
+        $temperature = $temperature ?? $this->providerConfig->getDefaultTemperature();
+        $maxTokens = $maxTokens ?? $this->providerConfig->getDefaultMaxTokens();
         $apiKey = $this->getApiKey();
         if (!$apiKey) {
             throw new LocalizedException(__('OpenAI API key is not configured.'));
@@ -55,7 +58,7 @@ class Client
             'max_tokens' => $maxTokens
         ];
 
-        $this->curl->post(self::OPENAI_API_URL, $this->json->serialize($requestData));
+        $this->curl->post($this->apiUrl, $this->json->serialize($requestData));
 
         $responseBody = $this->curl->getBody();
         $httpStatus = $this->curl->getStatus();
