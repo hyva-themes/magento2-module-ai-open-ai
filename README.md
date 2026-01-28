@@ -1,4 +1,4 @@
-# Module - Hyva_AiOpenai
+# Module - Hyva_AiOpenAi
 
 
 
@@ -15,7 +15,7 @@ Already a pro? Just edit this README.md and make it your own. Want to make it ea
 
 ```
 cd existing_repo
-git remote add origin https://gitlab.hyva.io/hyva-internal/ai/module-ai-openai.git
+git remote add origin https://gitlab.hyva.io/hyva-internal/ai/module-ai-open-ai.git
 git branch -M main
 git push -uf origin main
 ```

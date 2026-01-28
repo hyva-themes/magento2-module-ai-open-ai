@@ -1,0 +1,82 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Hyvä Themes - https://hyva.io
+ * Copyright © Hyvä Themes 2020-present. All rights reserved.
+ * This product is licensed per Magento install
+ * See https://hyva.io/license
+ */
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
+    <type name="Hyva\Ai\Model\ProviderPool">
+        <arguments>
+            <argument name="providers" xsi:type="array">
+                <item name="openai" xsi:type="object">Hyva\AiOpenAi\Model\Provider\OpenAiProvider</item>
+            </argument>
+        </arguments>
+    </type>
+
+    <type name="Hyva\AiOpenAi\Model\Client">
+        <arguments>
+            <argument name="providerConfig" xsi:type="object">Hyva\AiOpenAi\Model\ProviderConfig</argument>
+            <argument name="apiUrl" xsi:type="string">https://api.openai.com/v1/chat/completions</argument>
+        </arguments>
+    </type>
+
+    <type name="Hyva\AiOpenAi\Model\Provider\OpenAiProvider">
+        <arguments>
+            <argument name="providerConfig" xsi:type="object">Hyva\AiOpenAi\Model\ProviderConfig</argument>
+        </arguments>
+    </type>
+
+    <type name="Hyva\AiOpenAi\Model\Provider\OptionsSchema">
+        <arguments>
+            <argument name="providerConfig" xsi:type="object">Hyva\AiOpenAi\Model\ProviderConfig</argument>
+        </arguments>
+    </type>
+
+    <type name="Hyva\Ai\Model\ProviderResolver">
+        <arguments>
+            <argument name="providerModels" xsi:type="array">
+                <item name="openai" xsi:type="array">
+                    <item name="source_model" xsi:type="string">Hyva\AiOpenAi\Model\Config\Source\Model</item>
+                    <item name="label" xsi:type="string">openai</item>
+                    <item name="options" xsi:type="array">
+                        <item name="gpt-5" xsi:type="array">
+                            <item name="value" xsi:type="string">gpt-5</item>
+                            <item name="label" xsi:type="string">GPT-5</item>
+                        </item>
+                        <item name="gpt-4o-mini" xsi:type="array">
+                            <item name="value" xsi:type="string">gpt-4o-mini</item>
+                            <item name="label" xsi:type="string">GPT-4o Mini</item>
+                        </item>
+                        <item name="gpt-4o" xsi:type="array">
+                            <item name="value" xsi:type="string">gpt-4o</item>
+                            <item name="label" xsi:type="string">GPT-4o</item>
+                        </item>
+                        <item name="gpt-4-turbo" xsi:type="array">
+                            <item name="value" xsi:type="string">gpt-4-turbo</item>
+                            <item name="label" xsi:type="string">GPT-4 Turbo</item>
+                        </item>
+                        <item name="gpt-4" xsi:type="array">
+                            <item name="value" xsi:type="string">gpt-4</item>
+                            <item name="label" xsi:type="string">GPT-4</item>
+                        </item>
+                        <item name="gpt-3.5-turbo" xsi:type="array">
+                            <item name="value" xsi:type="string">gpt-3.5-turbo</item>
+                            <item name="label" xsi:type="string">GPT-3.5 Turbo</item>
+                        </item>
+                    </item>
+                </item>
+            </argument>
+        </arguments>
+    </type>
+
+    <type name="Hyva\Ai\Model\Provider\OptionsSchemaPool">
+        <arguments>
+            <argument name="schemas" xsi:type="array">
+                <item name="openai" xsi:type="object">Hyva\AiOpenAi\Model\Provider\OptionsSchema</item>
+            </argument>
+        </arguments>
+    </type>
+</config>
