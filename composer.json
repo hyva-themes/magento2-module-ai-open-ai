@@ -1,9 +1,10 @@
 {
-  "name": "hyva-themes/module-ai-open-ai",
+  "name": "hyva-themes/magento2-module-ai-open-ai",
   "description": "Hyva_AiOpenAi module",
   "type": "magento2-module",
   "require": {
-    "magento/framework": "*"
+    "magento/framework": "*",
+    "hyva-themes/magento2-module-ai": "*"
   },
   "authors": [{
       "name": "Hyvä Themes B.V.",
