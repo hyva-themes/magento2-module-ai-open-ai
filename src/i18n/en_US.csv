@@ -1,0 +1,10 @@
+"Controls randomness for translations (0.0 - 2.0, recommended: %1)","Controls randomness for translations (0.0 - 2.0, recommended: %1)"
+"Get your API key from <a href=""https://platform.openai.com/account/api-keys"" target=""_blank"">OpenAI Platform</a>","Get your API key from <a href=""https://platform.openai.com/account/api-keys"" target=""_blank"">OpenAI Platform</a>"
+"Invalid response from OpenAI API","Invalid response from OpenAI API"
+"Max Tokens","Max Tokens"
+"Maximum tokens for translation responses","Maximum tokens for translation responses"
+"Messages are required for OpenAI processing.","Messages are required for OpenAI processing."
+"OpenAI API key is not configured.","OpenAI API key is not configured."
+"OpenAI API request failed: %1","OpenAI API request failed: %1"
+"OpenAI Configuration","OpenAI Configuration"
+Temperature,Temperature
