@@ -22,4 +22,5 @@ The `Hyva_AiOpenAi` modules implements OpenAI's ChatGPT AI API utilizing the `Hy
 1. Run `bin/magento setup:upgrade`
 
 ## Documentation
-Coming soon.
+
+[https://docs.hyva.io/hyva-themes/ai/features-providers/index.html](https://docs.hyva.io/hyva-themes/ai/features-providers/index.html)
