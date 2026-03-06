@@ -9,6 +9,7 @@ declare(strict_types=1);
 namespace Hyva\AiOpenAi\Model;
 
 use Hyva\Ai\Api\ProviderConfigInterface;
+use Hyva\Ai\Model\ConcurrencyGuard;
 use Magento\Framework\App\Config\ScopeConfigInterface;
 use Magento\Framework\Exception\LocalizedException;
 use Magento\Framework\HTTP\Client\Curl;
@@ -50,6 +51,13 @@ class Client
         $this->curl->addHeader('Authorization', 'Bearer ' . $apiKey);
         $this->curl->addHeader('Content-Type', 'application/json');
 
+        $timeout = (int) ($this->scopeConfig->getValue(
+            ConcurrencyGuard::XML_PATH_REQUEST_TIMEOUT_SECONDS
+        ) ?? 0);
+        if ($timeout > 0) {
+            $this->curl->setTimeout($timeout);
+        }
+
         $requestData = [
             'model' => $model,
             'messages' => $messages,
@@ -57,7 +65,18 @@ class Client
             'max_tokens' => $maxTokens
         ];
 
-        $this->curl->post($this->apiUrl, $this->json->serialize($requestData));
+        try {
+            $this->curl->post($this->apiUrl, $this->json->serialize($requestData));
+        } catch (\Throwable $e) {
+            $msg = $e->getMessage();
+            if (stripos($msg, 'timed out') !== false || stripos($msg, 'timeout') !== false) {
+                $timeoutMessage = $timeout > 0
+                    ? __('The request to the AI provider timed out after %1 seconds. Try again or increase the timeout in Stores > Configuration > Hyvä AI > Runtime.', $timeout)
+                    : __('The request to the AI provider timed out. Try again or set a timeout in Stores > Configuration > Hyvä AI > Runtime.');
+                throw new LocalizedException($timeoutMessage);
+            }
+            throw new LocalizedException(__('OpenAI API request failed: %1', $msg), $e);
+        }
 
         $responseBody = $this->curl->getBody();
         $httpStatus = $this->curl->getStatus();
@@ -123,6 +142,15 @@ class Client
             }
         } catch (\Exception $e) {
             // If we can't parse the error, fall through to default message
+            return match ($httpStatus) {
+                400 => 'Bad request. Please check your input parameters.',
+                401 => 'Authentication failed. Please check your API key.',
+                403 => 'Access forbidden. Please check your API key permissions.',
+                429 => 'Too many requests. Please try again later.',
+                500 => 'OpenAI service error. Please try again later.',
+                503 => 'Service temporarily unavailable. Please try again later.',
+                default => "HTTP {$httpStatus}: Unable to process request",
+            };
         }
 
         return match ($httpStatus) {
