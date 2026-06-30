@@ -42,13 +42,7 @@ class OpenAiProvider implements ProviderInterface
                 continue;
             }
 
-            try {
-                $response = $this->client->chatCompletion($messages, $model, $temperature, $maxTokens);
-            } catch (\Exception $e) {
-                $responses[] = $e->getMessage();
-                continue;
-            }
-
+            $response = $this->client->chatCompletion($messages, $model, $temperature, $maxTokens);
             $responses[] = $this->client->extractContent($response);
         }
 
